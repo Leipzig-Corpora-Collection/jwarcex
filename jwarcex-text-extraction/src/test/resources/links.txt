@@ -1,0 +1,7 @@
+<html>
+  <body>
+    <div>
+      <a href="">FirstLink</a><a href="">SecondLink</a>
+    </div>
+  </body>
+</html>

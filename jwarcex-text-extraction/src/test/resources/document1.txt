@@ -1,0 +1,4 @@
+<body>
+Dieses Dokument enh�lt den Replacement-Character (�).
+Wir m�ssen Umlaute verwenden, um die Fehler zu sehen: ����.
+</body>

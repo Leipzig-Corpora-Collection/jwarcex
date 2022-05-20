@@ -1,0 +1,4 @@
+<html>
+  <!-- single line is important -->
+  <head><title>title</title></head><body>text</body>
+</html>

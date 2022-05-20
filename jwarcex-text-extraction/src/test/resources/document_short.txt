@@ -1,0 +1,5 @@
+<html>
+  <body>
+    This document containts less than 80 characters of text
+  </body>
+</html>

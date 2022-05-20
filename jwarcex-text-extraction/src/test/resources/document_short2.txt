@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <div>This document containts less than 80 characters of text</div>
+    <div>short line</div>
+    <div>short line</div>
+    <div>short line</div>
+    <div>short line</div>
+    <div>short line</div>
+    <div>short line</div>
+  </body>
+</html>
