@@ -196,7 +196,7 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 	private void submitPendingWarcDocuments() {
 
 		ProcessWarcRunnable warcToSourceFileEntryRunnable = new ProcessWarcRunnable(this.warcDocumentQueue,
-				this.outgoingSourceFileEntryQueue, this.getEncodingDetector(), this.getTextExtractor());
+				this.outgoingSourceFileEntryQueue, this.getEncodingDetector(), this.getTextExtractor().clone());
 		this.warcDocumentQueue = new ArrayList<>(BATCH_SIZE);
 
 		while (this.executorServiceForWarcProcessing.getQueue().size() > WARC_QUEUE_SIZE) {
