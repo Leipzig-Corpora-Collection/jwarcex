@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.uni_leipzig.asv.tools</groupId>
 		<artifactId>jwarcex</artifactId>
-		<version>3.0.2-SNAPSHOT</version>
+		<version>3.0.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jwarcex-core</artifactId>
