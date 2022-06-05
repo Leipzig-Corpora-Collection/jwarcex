@@ -18,4 +18,11 @@ public interface TextExtractor {
 	 * @return the processed warc document containing extracted text and meta data
 	 */
 	ProcessedWarcDocument getText(RawWarcDocument rawWarcDocument, Charset charset);
+	
+	/**
+	 * Creates a copy of this object.
+	 * 
+	 * @return a copy of the calling object
+	 */
+	TextExtractor clone();
 }

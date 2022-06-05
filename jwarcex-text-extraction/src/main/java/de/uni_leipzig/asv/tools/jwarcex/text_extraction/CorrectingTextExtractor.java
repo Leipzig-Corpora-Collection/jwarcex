@@ -57,7 +57,7 @@ public class CorrectingTextExtractor extends TextExtractorImpl implements TextEx
 
 		this(new TextExtractorImpl(), PARAMETER_MAX_OCCURRENCES_DEFAULT);
 	}
-
+	
 
 	public CorrectingTextExtractor(TextExtractor baseTextExtractor, int maximumReplacementCharsOccurrences) {
 
@@ -123,6 +123,25 @@ public class CorrectingTextExtractor extends TextExtractorImpl implements TextEx
 		}
 
 		return false;
+	}
+	
+	
+	public TextExtractor getBaseTextExtractor() {
+		
+		return this.baseTextExtractor;
+	}
+
+	
+	public int getMaximumReplacementCharsOccurrences() {
+		
+		return this.maximumReplacementCharsOccurrences;
+	}
+	
+	
+	@Override
+	public TextExtractor clone() {
+		
+		return new CorrectingTextExtractor(this.baseTextExtractor.clone(), this.maximumReplacementCharsOccurrences);
 	}
 
 }

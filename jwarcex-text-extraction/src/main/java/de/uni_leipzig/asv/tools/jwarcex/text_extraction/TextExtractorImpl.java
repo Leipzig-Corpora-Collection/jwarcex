@@ -213,7 +213,7 @@ public class TextExtractorImpl implements TextExtractor {
 	 * Remove any <noscript> tags that reside within the <head> of the document. They can per definition
 	 * only contain style, link and meta elements (where we do not extract text from).
 	 *
-	 * This is to avoid a false behaviour for invalid html pages where the creators wrongly use
+	 * This is to avoid an incorrect behavior for invalid html pages where the creators wrongly use
 	 * arbitrary elements inside a head's noscript tag.
 	 *
 	 * @see https://developer.mozilla.org/en/docs/Web/HTML/Element/noscript
@@ -344,4 +344,29 @@ public class TextExtractorImpl implements TextExtractor {
 
 		sb.append("\n");
 	}
+	
+	
+	public int getMineLineLength() {
+		
+		return this.minLineLength;
+	}
+	
+	
+	public int getMinDocumentLength() {
+		
+		return this.minDocumentLength;
+	}
+	
+	
+	public boolean extractTitle() {
+		
+		return this.extractTitle;
+	}
+	
+	
+	public TextExtractor clone() {
+		
+		return new TextExtractorImpl(this.minLineLength, this.minDocumentLength, this.extractTitle);
+	}
+	
 }

@@ -25,7 +25,19 @@ public class CorrectingTextExtractorImplTest {
 	protected RawWarcDocument getRawWarcDocumentFromString(String str) {
 		return new RawWarcDocument("http://any-location", "any-date", str.getBytes(Charsets.UTF_8));
 	}
+	
+	@Test
+	public void testGettersAndDefaultSettings() {
 
+		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor();
+		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT, 
+				customCorrectingTextExtractor.getMaximumReplacementCharsOccurrences());
+		
+		int maximumReplacementCharsOccurrences = 4;
+		CorrectingTextExtractor customCorrectingTextExtractorTwo = new CorrectingTextExtractor(new TextExtractorImpl(), maximumReplacementCharsOccurrences);
+		Assert.assertEquals(maximumReplacementCharsOccurrences, 
+				customCorrectingTextExtractorTwo.getMaximumReplacementCharsOccurrences());
+	}
 
 	@Test
 	public void testGetTextWithTooMuchEncodingErrors() throws IOException {
@@ -101,6 +113,21 @@ public class CorrectingTextExtractorImplTest {
 		String html2 = "<body>Text with visible encoding errors ���������</body>";
 		RawWarcDocument rawWarcDocument2 = this.getRawWarcDocumentFromString(html2);
 		Assert.assertNotNull(customCorrectingTextExtractor.getText(rawWarcDocument2, Charsets.UTF_8));
+	}
+	
+	
+	@Test
+	public void testClone() {
+		
+		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor(
+				new TextExtractorImpl(0, 0, false), 2);
+		
+		CorrectingTextExtractor clonedTextExtractor = (CorrectingTextExtractor) customCorrectingTextExtractor.clone();
+		Assert.assertNotEquals(customCorrectingTextExtractor, clonedTextExtractor);
+		Assert.assertNotEquals(customCorrectingTextExtractor.getBaseTextExtractor(), 
+				clonedTextExtractor.getBaseTextExtractor());
+		
+		Assert.assertEquals(2, clonedTextExtractor.getMaximumReplacementCharsOccurrences());
 	}
 
 }

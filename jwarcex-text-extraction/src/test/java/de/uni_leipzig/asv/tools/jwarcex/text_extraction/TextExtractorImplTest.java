@@ -12,7 +12,21 @@ import org.junit.Test;
 import com.google.common.base.Strings;
 
 public class TextExtractorImplTest {
-
+	
+	@Test
+	public void testGetters() {
+		
+		int minLineLength = 20;
+		int minDocumentLength = 40;
+		boolean extractTitle = false;
+		
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle);
+		
+		Assert.assertEquals(minLineLength, textExtractorImpl.getMineLineLength());
+		Assert.assertEquals(minDocumentLength, textExtractorImpl.getMinDocumentLength());
+		Assert.assertFalse(textExtractorImpl.extractTitle());
+	}
+	
 	@Test
 	public void testGetTextWithMinLineLengthParameter() throws IOException {
 
@@ -144,6 +158,24 @@ public class TextExtractorImplTest {
 		String textNormal = textExtractorImpl.extractText(documentNormal);
 
 		Assert.assertEquals(textMinified, textNormal);
+	}
+	
+	
+	@Test
+	public void testClone() {
+		
+		int minLineLength = 20;
+		int minDocumentLength = 40;
+		boolean extractTitle = false;
+		
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle);
+		
+		TextExtractorImpl clonedTextEctractor = (TextExtractorImpl) textExtractorImpl.clone();
+		Assert.assertNotEquals(textExtractorImpl, clonedTextEctractor);
+		
+		Assert.assertEquals(minLineLength, clonedTextEctractor.getMineLineLength());
+		Assert.assertEquals(minDocumentLength, clonedTextEctractor.getMinDocumentLength());
+		Assert.assertFalse(clonedTextEctractor.extractTitle());
 	}
 
 }
