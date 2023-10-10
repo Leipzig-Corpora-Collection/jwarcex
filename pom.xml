@@ -18,10 +18,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jwarcex-version>${project.version}</jwarcex-version>
-		<junit-version>4.12</junit-version>
-		<jsoup-version>1.11.3</jsoup-version>
+		<junit-version>4.13.2</junit-version>
+		<jsoup-version>1.16.1</jsoup-version>
 		<commons-io-version>2.4</commons-io-version>
-		<log4j-version>2.16.0</log4j-version>
+		<log4j-version>2.20.0</log4j-version>
 	</properties>
 
 	<modules>
@@ -45,7 +45,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>3.11.0</version>
 					<configuration>
 						<source>11</source>
 						<target>11</target>
@@ -64,7 +64,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.6.0</version>
 					<configuration>
 						<additionalOptions>-Xdoclint:none</additionalOptions>
 						<source>8</source>
