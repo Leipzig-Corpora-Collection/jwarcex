@@ -20,7 +20,7 @@ public class JWarcExCommandLineOptions implements CommandLineOptions {
 		options.addOption("t", "threads", true,
 				"Number of threads. (Default: " + ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT + ")");
 		options.addOption("o", "output_format", true,
-				"Number of threads. (Possible values: [source, wet, xml]; Default: source)");
+				"Number of threads. (Possible values: [source, jsonl, wet, xml]; Default: source)");
 		options.addOption("h", "help", false, "Prints this help.");
 		options.addOption("c", "compressed", false, "Enables reading from gzip compressed input. (Default: "
 				+ WarcExtractorAction.DEFAULT_IS_COMPRESSED + ")");

@@ -8,7 +8,7 @@ public class ProcessedWarcDocument {
 	/**
 	 * WARC record ID.
 	 */
-	private String warcRecordId;
+	protected String warcRecordId;
 
 	/**
 	 * The document's url.
@@ -29,7 +29,6 @@ public class ProcessedWarcDocument {
 	 * The detected encoding for this document.
 	 */
 	private String encoding;
-
 
 	public ProcessedWarcDocument(String warcRecordId, String location, String date, String content, String encoding) {
 

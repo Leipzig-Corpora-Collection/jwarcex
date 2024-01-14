@@ -22,8 +22,6 @@ public class ProcessWarcRunnable implements Runnable {
 
 	private static final Logger LOGGER = LogManager.getLogger(ProcessWarcRunnable.class);
 
-	private final WarcRecordUtil warcRecordUtil = new WarcRecordUtil();
-
 	private final EncodingDetector encodingDetector;
 
 	private final List<RawWarcDocument> rawWarcDocuments;

@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
-    private static final Logger LOGGER = LogManager.getLogger(SourceFormatWarcWriterImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(WetWriterImpl.class);
 
     private static final String ISO_8601_DATE_STRING = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 

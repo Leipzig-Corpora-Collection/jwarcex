@@ -7,6 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.JsonlWriterImpl;
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.SourceFormatWarcWriterImpl;
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.WetWriterImpl;
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.XmlWarcWriterImpl;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,9 +20,6 @@ import org.junit.rules.TemporaryFolder;
 import org.mockito.Mockito;
 
 import de.uni_leipzig.asv.tools.jwarcex.core.constant.OutputFormat;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.SourceFormatWarcWriterImpl;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.WarcWriter;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.XmlWarcWriterImpl;
 import de.uni_leipzig.asv.tools.jwarcex.encoding_detection.EncodingDetectorImpl;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.TextExtractorImpl;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.RawWarcDocument;
@@ -51,6 +52,28 @@ public class ParallelWarcExtractorTest {
 		WarcWriter warcWriter = this.parallelWarcExtractor.createWarcWriter(outputStreamSpy);
 
 		Assert.assertTrue(warcWriter.getClass().equals(SourceFormatWarcWriterImpl.class));
+	}
+
+
+	@Test
+	public void testCreateWarcWriterWet() throws IOException {
+
+		OutputStream outputStreamSpy = Mockito.spy(FileUtils.openOutputStream(this.outPath.toFile()));
+
+		parallelWarcExtractor.setOutputFormat(OutputFormat.WET);
+		WarcWriter warcWriter = this.parallelWarcExtractor.createWarcWriter(outputStreamSpy);
+		Assert.assertTrue(warcWriter.getClass().equals(WetWriterImpl.class));
+	}
+
+
+	@Test
+	public void testCreateWarcWriterJsonl() throws IOException {
+
+		OutputStream outputStreamSpy = Mockito.spy(FileUtils.openOutputStream(this.outPath.toFile()));
+
+		parallelWarcExtractor.setOutputFormat(OutputFormat.JSONL);
+		WarcWriter warcWriter = this.parallelWarcExtractor.createWarcWriter(outputStreamSpy);
+		Assert.assertTrue(warcWriter.getClass().equals(JsonlWriterImpl.class));
 	}
 
 

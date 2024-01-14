@@ -1,23 +1,19 @@
 package de.uni_leipzig.asv.tools.jwarcex.core.writer;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import com.google.common.base.Charsets;
+import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.common.base.Charsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
+public class JsonlWriterImplTest {
+	private Path expectedXmlPath = Paths.get("src/test/resources/writer/sample.jsonl");
 
-public class XmlWarcWriterImplTest {
-
-	private Path expectedXmlPath = Paths.get("src/test/resources/writer/sample.xml");
-
-
-	private Path expectedMultiXmlPath = Paths.get("src/test/resources/writer/sample-multi.xml");
+	private Path expectedMultiXmlPath = Paths.get("src/test/resources/writer/sample-multi.jsonl");
 
 
 	@Test
@@ -31,7 +27,7 @@ public class XmlWarcWriterImplTest {
 				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
-		XmlWarcWriterImpl warcWriter = new XmlWarcWriterImpl(outputStream);
+		JsonlWriterImpl warcWriter = new JsonlWriterImpl(outputStream);
 
 		warcWriter.write(processedWarcDocument);
 		warcWriter.flush();
@@ -62,7 +58,7 @@ public class XmlWarcWriterImplTest {
 				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
-		XmlWarcWriterImpl warcWriter = new XmlWarcWriterImpl(outputStream);
+		JsonlWriterImpl warcWriter = new JsonlWriterImpl(outputStream);
 
 		warcWriter.write(processedWarcDocument);
 		warcWriter.write(processedWarcDocumentTwo);
@@ -88,7 +84,7 @@ public class XmlWarcWriterImplTest {
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
 
-		try (XmlWarcWriterImpl warcWriter = new XmlWarcWriterImpl(outputStream)) {
+		try (JsonlWriterImpl warcWriter = new JsonlWriterImpl(outputStream)) {
 			warcWriter.write(processedWarcDocument);
 			warcWriter.flush();
 		}

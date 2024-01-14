@@ -70,13 +70,16 @@ public class WarcExtractorParametersBuilder {
 			if (optionValue.equals("source")) {
 
 				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.SOURCE);
-			} else if (optionValue.equals("xml")) {
+			} else if (optionValue.equals("jsonl")) {
 
-				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.XML);
+				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.JSONL);
 			} else if (optionValue.equals("wet")) {
 
 				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.WET);
-			} else {
+			} else if (optionValue.equals("xml")) {
+
+				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.XML);
+			}  else {
 				throw new IllegalArgumentException("Invalid argument for output format: " + optionValue);
 			}
 

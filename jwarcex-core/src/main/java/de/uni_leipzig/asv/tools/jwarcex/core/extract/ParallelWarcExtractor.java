@@ -15,7 +15,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.WetWriterImpl;
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +24,6 @@ import com.google.common.base.Preconditions;
 import de.uni_leipzig.asv.tools.jwarcex.core.concurrency.OutputWriterRunnable;
 import de.uni_leipzig.asv.tools.jwarcex.core.concurrency.ProcessWarcRunnable;
 import de.uni_leipzig.asv.tools.jwarcex.core.constant.OutputFormat;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.SourceFormatWarcWriterImpl;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.WarcWriter;
-import de.uni_leipzig.asv.tools.jwarcex.core.writer.XmlWarcWriterImpl;
 import de.uni_leipzig.asv.tools.jwarcex.encoding_detection.EncodingDetector;
 import de.uni_leipzig.asv.tools.jwarcex.encoding_detection.EncodingDetectorImpl;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.TextExtractor;
@@ -148,6 +145,9 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 		if (outputFormat == OutputFormat.XML) {
 
 			return new XmlWarcWriterImpl(outputStream);
+		} else if (outputFormat == OutputFormat.JSONL) {
+
+			return new JsonlWriterImpl(outputStream);
 		} else if (outputFormat == OutputFormat.WET) {
 
 			return new WetWriterImpl(outputStream);

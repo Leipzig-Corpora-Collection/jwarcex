@@ -110,12 +110,12 @@ public class WarcExtractorParametersBuilderTest {
 
 
 	@Test
-	public void testBuildParameterObjectFromCommandLineWithOutputFormatXml() throws ParseException {
+	public void testBuildParameterObjectFromCommandLineWithOutputFormatJsonl() throws ParseException {
 
-		Assert.assertNotEquals("xml", ParallelWarcExtractor.PARAMETER_OUTPUT_FORMAT_DEFAULT.toString());
+		Assert.assertNotEquals("jsonl", ParallelWarcExtractor.PARAMETER_OUTPUT_FORMAT_DEFAULT.toString());
 
 		CommandLine commandLine = parser.parse(new JWarcExCommandLineOptions().getOptions(),
-				new String[] { "-o", "xml" });
+				new String[] { "-o", "jsonl" });
 
 		WarcExtractorAdditionalParameters warcExtractorAdditionalParameters = WarcExtractorParametersBuilder
 				.buildParameterObjectFromCommandLine(commandLine);
@@ -127,7 +127,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMinDocumentLength());
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
-		Assert.assertEquals(OutputFormat.XML, warcExtractorAdditionalParameters.getOutputFormat());
+		Assert.assertEquals(OutputFormat.JSONL, warcExtractorAdditionalParameters.getOutputFormat());
 	}
 
 
@@ -150,6 +150,28 @@ public class WarcExtractorParametersBuilderTest {
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
 		Assert.assertEquals(OutputFormat.WET, warcExtractorAdditionalParameters.getOutputFormat());
+	}
+
+
+	@Test
+	public void testBuildParameterObjectFromCommandLineWithOutputFormatXml() throws ParseException {
+
+		Assert.assertNotEquals("xml", ParallelWarcExtractor.PARAMETER_OUTPUT_FORMAT_DEFAULT.toString());
+
+		CommandLine commandLine = parser.parse(new JWarcExCommandLineOptions().getOptions(),
+				new String[] { "-o", "xml" });
+
+		WarcExtractorAdditionalParameters warcExtractorAdditionalParameters = WarcExtractorParametersBuilder
+				.buildParameterObjectFromCommandLine(commandLine);
+
+		Assert.assertFalse(warcExtractorAdditionalParameters.isCompressed());
+		Assert.assertEquals(TextExtractorImpl.PARAMETER_MIN_LINE_LENGTH_DEFAULT,
+				warcExtractorAdditionalParameters.getMinLineLength());
+		Assert.assertEquals(TextExtractorImpl.PARAMETER_MIN_DOCUMENT_LENGTH_DEFAULT,
+				warcExtractorAdditionalParameters.getMinDocumentLength());
+		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
+				warcExtractorAdditionalParameters.getMaxEncodingErrors());
+		Assert.assertEquals(OutputFormat.XML, warcExtractorAdditionalParameters.getOutputFormat());
 	}
 
 
