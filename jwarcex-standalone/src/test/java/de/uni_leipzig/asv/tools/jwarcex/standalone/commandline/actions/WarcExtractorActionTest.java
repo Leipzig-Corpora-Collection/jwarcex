@@ -16,7 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import de.uni_leipzig.asv.tools.jwarcex.core.extract.ParallelWarcExtractor;
 import de.uni_leipzig.asv.tools.jwarcex.standalone.commandline.config.WarcExtractorAdditionalParameters;

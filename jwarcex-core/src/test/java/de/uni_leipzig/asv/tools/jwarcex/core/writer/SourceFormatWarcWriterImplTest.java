@@ -11,8 +11,12 @@ public class SourceFormatWarcWriterImplTest {
 	@Test
 	public void testWrite() throws Exception {
 
-		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument("http://localhost/", "2017-01-01",
-				"abc", "UTF-8");
+		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"http://localhost/",
+				"2017-01-01",
+				"abc",
+				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
 		SourceFormatWarcWriterImpl warcWriter = new SourceFormatWarcWriterImpl(outputStream);
@@ -33,8 +37,12 @@ public class SourceFormatWarcWriterImplTest {
 	@Test
 	public void testWriteAsRessource() throws Exception {
 
-		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument("http://localhost/", "2017-01-01",
-				"abc", "UTF-8");
+		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"http://localhost/",
+				"2017-01-01",
+				"abc",
+				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
 

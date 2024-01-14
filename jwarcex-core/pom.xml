@@ -63,8 +63,8 @@
 
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
+			<artifactId>mockito-core</artifactId>
+			<version>5.8.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>org.jwat</groupId>
 			<artifactId>jwat-warc</artifactId>
-			<version>1.0.4</version>
+			<version>1.2.1</version>
 		</dependency>
 
 		<dependency>

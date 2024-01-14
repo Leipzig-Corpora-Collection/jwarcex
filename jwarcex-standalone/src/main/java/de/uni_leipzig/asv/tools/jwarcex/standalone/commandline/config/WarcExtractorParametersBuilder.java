@@ -73,6 +73,9 @@ public class WarcExtractorParametersBuilder {
 			} else if (optionValue.equals("xml")) {
 
 				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.XML);
+			} else if (optionValue.equals("wet")) {
+
+				warcExtractorAdditionalParameters.setOutputFormat(OutputFormat.WET);
 			} else {
 				throw new IllegalArgumentException("Invalid argument for output format: " + optionValue);
 			}

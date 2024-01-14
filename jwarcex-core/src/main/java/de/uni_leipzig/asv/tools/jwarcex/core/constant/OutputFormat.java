@@ -5,5 +5,5 @@ package de.uni_leipzig.asv.tools.jwarcex.core.constant;
  */
 public enum OutputFormat {
 
-	SOURCE, XML
+	SOURCE, XML, WET
 }

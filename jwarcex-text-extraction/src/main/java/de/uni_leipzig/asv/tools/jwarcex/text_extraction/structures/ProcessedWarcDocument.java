@@ -6,6 +6,11 @@ package de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures;
 public class ProcessedWarcDocument {
 
 	/**
+	 * WARC record ID.
+	 */
+	private String warcRecordId;
+
+	/**
 	 * The document's url.
 	 */
 	private String location;
@@ -26,14 +31,24 @@ public class ProcessedWarcDocument {
 	private String encoding;
 
 
-	public ProcessedWarcDocument(String location, String date, String content, String encoding) {
+	public ProcessedWarcDocument(String warcRecordId, String location, String date, String content, String encoding) {
 
+		this.warcRecordId = warcRecordId;
 		this.location = location;
 		this.date = date;
 		this.content = content;
 		this.encoding = encoding;
 	}
 
+	public String getWarcRecordId() {
+
+		return warcRecordId;
+	}
+
+	public void setWarcRecordId(String warcRecordId) {
+
+		this.warcRecordId = warcRecordId;
+	}
 
 	public String getLocation() {
 

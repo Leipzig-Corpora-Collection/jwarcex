@@ -5,6 +5,8 @@ package de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures;
  */
 public class RawWarcDocument {
 
+	private String warcRecordId;
+
 	private String location;
 
 	private String date;
@@ -12,11 +14,24 @@ public class RawWarcDocument {
 	private byte[] content;
 
 
-	public RawWarcDocument(String location, String date, byte[] content) {
+	public RawWarcDocument(String warcRecordId, String location, String date, byte[] content) {
 
+		this.warcRecordId = warcRecordId;
 		this.location = location;
 		this.date = date;
 		this.content = content;
+	}
+
+
+	public String getWarcRecordId() {
+
+		return this.warcRecordId;
+	}
+
+
+	public void setWarcRecordId(String warcRecordId) {
+
+		this.warcRecordId = warcRecordId;
 	}
 
 

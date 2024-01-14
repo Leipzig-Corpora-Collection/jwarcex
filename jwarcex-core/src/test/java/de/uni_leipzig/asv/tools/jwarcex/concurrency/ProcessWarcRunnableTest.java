@@ -23,7 +23,7 @@ public class ProcessWarcRunnableTest {
 
 		RawWarcDocument rawWarcDocument1 = TestRawWarcDocuments.getFirstRawWarcDocument();
 		RawWarcDocument rawWarcDocument2 = TestRawWarcDocuments.getSecondRawWarcDocument();
-		// this one gets dropped due too containing too few characters
+		// this one gets dropped due to containing too few characters
 		RawWarcDocument rawWarcDocument3 = TestRawWarcDocuments.getThirdRawWarcDocument();
 
 		List<RawWarcDocument> rawWarcDocuments = new ArrayList<>();

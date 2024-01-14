@@ -15,6 +15,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.WetWriterImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -147,6 +148,9 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 		if (outputFormat == OutputFormat.XML) {
 
 			return new XmlWarcWriterImpl(outputStream);
+		} else if (outputFormat == OutputFormat.WET) {
+
+			return new WetWriterImpl(outputStream);
 		}
 
 		return new SourceFormatWarcWriterImpl(outputStream);

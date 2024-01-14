@@ -67,6 +67,8 @@ public class ParallelWarcExtractorTest {
 
 	@Test
 	public void testExtractCallsPrepareProcessCleanup() throws IOException {
+		Mockito.doNothing().when((AbstractWarcExtractor)this.parallelWarcExtractor)
+				.extract(this.warcPath, this.outPath);
 		Mockito.doNothing().when(this.parallelWarcExtractor).prepare();
 		Mockito.doNothing().when(this.parallelWarcExtractor).processWarc(Mockito.any(RawWarcDocument.class));
 		Mockito.doNothing().when(this.parallelWarcExtractor).cleanup();
@@ -82,6 +84,8 @@ public class ParallelWarcExtractorTest {
 
 		this.parallelWarcExtractor.setNumberOfThreads(numThreads);
 
+		Mockito.doNothing().when((AbstractWarcExtractor)this.parallelWarcExtractor)
+				.extract(this.warcPath, this.outPath);
 		Mockito.doNothing().when(this.parallelWarcExtractor).prepare();
 		Mockito.doNothing().when(this.parallelWarcExtractor).processWarc(Mockito.any(RawWarcDocument.class));
 		Mockito.doNothing().when(this.parallelWarcExtractor).cleanup();
@@ -104,8 +108,10 @@ public class ParallelWarcExtractorTest {
 	@Test
 	public void testProcessWarcWithRobotsTxt() throws UnsupportedEncodingException {
 
-		RawWarcDocument rawWarcDocument = new RawWarcDocument("http://www.example.com/robots.txt",
-				"2016-09-13T23:59:38Z", "This is my content".getBytes("UTF-8"));
+		RawWarcDocument rawWarcDocument = new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"http://www.example.com/robots.txt",
+				"2016-09-13T23:59:38Z",
+				"This is my content".getBytes("UTF-8"));
 
 		this.parallelWarcExtractor.processWarc(rawWarcDocument);
 

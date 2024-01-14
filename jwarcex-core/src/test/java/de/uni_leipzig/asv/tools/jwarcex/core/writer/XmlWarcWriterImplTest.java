@@ -20,8 +20,12 @@ public class XmlWarcWriterImplTest {
 	@Test
 	public void testWrite() throws Exception {
 
-		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument("http://localhost/", "2017-01-01",
-				"abc", "UTF-8");
+		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"http://localhost/",
+				"2017-01-01",
+				"abc",
+				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
 		XmlWarcWriterImpl warcWriter = new XmlWarcWriterImpl(outputStream);
@@ -34,15 +38,18 @@ public class XmlWarcWriterImplTest {
 		String result = outputStream.toString();
 		String expected = FileUtils.readFileToString(expectedXmlPath.toFile(), Charsets.UTF_8);
 		Assert.assertEquals(expected, result);
-
 	}
 
 
 	@Test
-	public void testWriteAsRessource() throws Exception {
+	public void testWriteAsResource() throws Exception {
 
-		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument("http://localhost/", "2017-01-01",
-				"abc", "UTF-8");
+		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"http://localhost/",
+				"2017-01-01",
+				"abc",
+				"UTF-8");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(16);
 
@@ -54,7 +61,6 @@ public class XmlWarcWriterImplTest {
 		String result = outputStream.toString();
 		String expected = FileUtils.readFileToString(expectedXmlPath.toFile(), Charsets.UTF_8);
 		Assert.assertEquals(expected, result);
-
 	}
 
 }

@@ -129,6 +129,8 @@ public class WarcReaderImpl implements WarcReader {
 	protected RawWarcDocument convertToRawWarcDocument(WarcRecord warcRecord) {
 
 		try {
+			String recordId = this.getWarcRecordHeaderFieldValue(warcRecord,
+					WarcConstants.WARC_HEADER_RECORD_ID_KEY);
 			String location = this.getWarcRecordHeaderFieldValue(warcRecord,
 					WarcConstants.WARC_HEADER_LOCATION_KEY);
 			String date = this.getWarcRecordHeaderFieldValue(warcRecord,
@@ -136,7 +138,7 @@ public class WarcReaderImpl implements WarcReader {
 
 			byte[] bytes = this.toByteArray(warcRecord.getPayload().getInputStream());
 
-			return new RawWarcDocument(location, date, bytes);
+			return new RawWarcDocument(recordId, location, date, bytes);
 
 		} catch (IOException e) {
 

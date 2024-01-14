@@ -16,9 +16,17 @@ public class OutputWriterRunnableTest {
 	@Test
 	public void testOutputWriterRunnable() throws InterruptedException, IOException {
 
-		ProcessedWarcDocument processedWarcDocument1 = new ProcessedWarcDocument("location1", "2016-01-01", "content1",
+		ProcessedWarcDocument processedWarcDocument1 = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"location1",
+				"2016-01-01",
+				"content1",
 				"UTF-8");
-		ProcessedWarcDocument processedWarcDocument2 = new ProcessedWarcDocument("location2", "2016-02-02", "content2",
+		ProcessedWarcDocument processedWarcDocument2 = new ProcessedWarcDocument(
+				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
+				"location2",
+				"2016-02-02",
+				"content2",
 				"UTF-8");
 
 		BlockingQueue<ProcessedWarcDocument> queue = new ArrayBlockingQueue<>(3);

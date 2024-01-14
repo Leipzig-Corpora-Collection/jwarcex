@@ -176,7 +176,7 @@ public class TextExtractorImpl implements TextExtractor {
 			return null;
 		}
 
-		return new ProcessedWarcDocument(rawWarcDocument.getLocation(),
+		return new ProcessedWarcDocument(rawWarcDocument.getWarcRecordId(), rawWarcDocument.getLocation(),
 				this.dateUtil.getFormattedDate(rawWarcDocument.getDate()), extractedText.toString(), charset.name());
 
 	}
@@ -197,7 +197,7 @@ public class TextExtractorImpl implements TextExtractor {
 			startElement = document;
 		}
 
-		String bodyText = this.getText(startElement).trim();
+		String bodyText = this.getText(startElement).strip();
 		extractedText.append(bodyText);
 
 		if (extractedText.length() < this.minDocumentLength) {

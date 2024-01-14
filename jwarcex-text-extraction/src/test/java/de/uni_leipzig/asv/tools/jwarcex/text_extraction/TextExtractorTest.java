@@ -37,13 +37,13 @@ public class TextExtractorTest {
 
 
 	protected RawWarcDocument getRawWarcDocumentFromPath(String pathStr) throws IOException {
-		return new RawWarcDocument("http://any-location", "any-date",
+		return new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>","http://any-location", "any-date",
 				Files.readAllBytes(Paths.get(pathStr)));
 	}
 
 
 	protected RawWarcDocument getRawWarcDocumentFromString(String str) {
-		return new RawWarcDocument("http://any-location", "any-date", str.getBytes(Charsets.UTF_8));
+		return new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>","http://any-location", "any-date", str.getBytes(Charsets.UTF_8));
 	}
 
 

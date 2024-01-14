@@ -17,13 +17,13 @@ public class CorrectingTextExtractorImplTest {
 
 
 	protected RawWarcDocument getRawWarcDocumentFromPath(String pathStr) throws IOException {
-		return new RawWarcDocument("http://any-location", "any-date",
+		return new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>", "http://any-location", "any-date",
 				Files.readAllBytes(Paths.get(pathStr)));
 	}
 
 
 	protected RawWarcDocument getRawWarcDocumentFromString(String str) {
-		return new RawWarcDocument("http://any-location", "any-date", str.getBytes(Charsets.UTF_8));
+		return new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>","http://any-location", "any-date", str.getBytes(Charsets.UTF_8));
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class CorrectingTextExtractorImplTest {
 		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor();
 
 		String html = "<body>Text with visible encoding errors ����</body>";
-		RawWarcDocument rawWarcDocument = new RawWarcDocument("http://any-location", "any-date",
+		RawWarcDocument rawWarcDocument = new RawWarcDocument("<urn:uuid:00000000-0000-0000-0000-000000000000>","http://any-location", "any-date",
 				html.getBytes(Charsets.UTF_8));
 		Assert.assertNull(customCorrectingTextExtractor.getText(rawWarcDocument, Charsets.UTF_8));
 	}
