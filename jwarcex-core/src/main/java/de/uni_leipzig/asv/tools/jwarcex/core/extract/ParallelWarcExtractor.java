@@ -99,6 +99,11 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 	 */
 	private int readDocuments = 0;
 
+	/**
+	 * Number of documents submitted to the queue.
+	 */
+	private int submittedDocuments = 0;
+
 
 	/**
 	 * For testing purposes only.
@@ -185,6 +190,7 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 
 		if (this.warcDocumentQueue.size() % BATCH_SIZE == 0) {
 
+			this.submittedDocuments += warcDocumentQueue.size();
 			this.submitPendingWarcDocuments();
 		}
 	}
@@ -236,8 +242,12 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 
 		if (this.warcDocumentQueue.size() > 0) {
 
+			this.submittedDocuments += warcDocumentQueue.size();
 			this.submitPendingWarcDocuments();
 		}
+
+		LOGGER.debug("{} documents read", Integer.valueOf(this.readDocuments));
+		LOGGER.debug("{} documents submitted", Integer.valueOf(this.submittedDocuments));
 
 		this.shutdownWarcProcessingExecutor();
 		this.stopOutputWriter();
