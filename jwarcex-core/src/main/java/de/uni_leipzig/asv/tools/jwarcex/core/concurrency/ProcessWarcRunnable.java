@@ -80,13 +80,15 @@ public class ProcessWarcRunnable implements Runnable {
 
 				this.addProcessedEntryToQueue(processedWarcDocument);
 			} else {
-
 				LOGGER.debug("No text extracted from document with location={}", rawWarcDocument.getLocation());
 			}
 
 		} catch (IllegalArgumentException e) {
 			LOGGER.debug("IllegalArgumentException due to invalid encoding: {}", String.valueOf(encoding));
+		} catch (RuntimeException e) {
+			LOGGER.error(e);
 		}
+
 
 	}
 
@@ -97,13 +99,12 @@ public class ProcessWarcRunnable implements Runnable {
 
 	}
 
-	
+
 	protected void addProcessedEntryToQueue(ProcessedWarcDocument sourceFileEntry) {
 
 		boolean success = false;
 
 		while (!success) {
-
 			success = this.queue.offer(sourceFileEntry);
 		}
 	}
