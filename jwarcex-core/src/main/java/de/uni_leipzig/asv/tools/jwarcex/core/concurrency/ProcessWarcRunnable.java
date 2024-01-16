@@ -97,22 +97,7 @@ public class ProcessWarcRunnable implements Runnable {
 
 	}
 
-
-	protected String createNewStringFromBytesAndCharsetName(RawWarcDocument rawWarcDocument, String charsetName)
-			throws UnsupportedEncodingException {
-
-		try {
-
-			return new String(rawWarcDocument.getContent(), charsetName);
-		} catch (UnsupportedEncodingException e) {
-
-			LOGGER.warn("UnsupportedEncodingException '{}': {}", rawWarcDocument.getLocation(), charsetName);
-
-			throw e;
-		}
-	}
-
-
+	
 	protected void addProcessedEntryToQueue(ProcessedWarcDocument sourceFileEntry) {
 
 		boolean success = false;
