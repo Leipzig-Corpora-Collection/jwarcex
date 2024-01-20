@@ -7,8 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 import de.uni_leipzig.asv.tools.jwarcex.core.writer.JsonlWriterImpl;
 import de.uni_leipzig.asv.tools.jwarcex.core.writer.SourceFormatWarcWriterImpl;
+import de.uni_leipzig.asv.tools.jwarcex.core.writer.WarcWriter;
 import de.uni_leipzig.asv.tools.jwarcex.core.writer.WetWriterImpl;
 import de.uni_leipzig.asv.tools.jwarcex.core.writer.XmlWarcWriterImpl;
 import org.apache.commons.io.FileUtils;

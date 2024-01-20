@@ -5,7 +5,6 @@ import de.uni_leipzig.asv.tools.jwarcex.core.constant.WarcConstants;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jwat.common.Base32;
 import org.jwat.warc.WarcRecord;
 import org.jwat.warc.WarcWriterFactory;
 
@@ -80,7 +79,7 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
         WarcRecord warcRecord = this.getWarcInfoRecord(this.jwatWarcWriter);
         warcRecord.header.addHeader(WarcConstants.CONTENT_TYPE, "application/warc-fields");
-        warcRecord.header.addHeader("Content-Length", String.valueOf(Long.valueOf(contentBlockBytes.length)));
+        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH, String.valueOf(Long.valueOf(contentBlockBytes.length)));
         this.jwatWarcWriter.writeHeader(warcRecord);
 
         this.jwatWarcWriter.writePayload(contentBlockBytes);
