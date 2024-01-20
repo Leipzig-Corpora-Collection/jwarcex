@@ -15,7 +15,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -52,7 +58,12 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
             throw new RuntimeException(e);
         }
 
-        String warcInfoContentBlock = "software : jwarcex" + this.CRLF;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss 'GMT'", Locale.US)
+                .withZone(ZoneId.of("GMT"));
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+        String warcInfoContentBlock = "Software-Info : jwarcex" + this.CRLF;
+        warcInfoContentBlock += "Extracted-Date : " + zonedDateTime.format(formatter) + this.CRLF;
         this.writeWarcInfo(warcInfoContentBlock);
     }
 

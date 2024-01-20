@@ -2,10 +2,11 @@ WARC/1.0
 WARC-Type: warcinfo
 WARC-Record-ID: <urn:uuid:00000000-0000-0000-0001-000000000001>
 WARC-Date: 2024-01-14T15:20:06Z
-Content-Length: 20
+Content-Length: 73
 Content-Type: application/warc-fields
 
-software : jwarcex
+Software-Info : jwarcex
+Extracted-Date : Sat, 20 Jan 2024 11:51:58 GMT
 
 
 WARC/1.0

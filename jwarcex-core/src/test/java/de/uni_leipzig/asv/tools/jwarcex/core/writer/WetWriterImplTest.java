@@ -111,6 +111,10 @@ public class WetWriterImplTest {
 				"<urn:uuid:00000000-0000-0000-0001-000000000001>");
 		text = text.replaceAll("\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ",
 				"2024-01-14T15:20:06Z");
+		text = text.replaceAll("(Mon|Tue|Wed|Thu|Fri|Sat|Sun), " +
+						"\\d\\d? (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) " +
+						"\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d GMT",
+				"Sat, 20 Jan 2024 11:51:58 GMT");
 		return text;
 	}
 
