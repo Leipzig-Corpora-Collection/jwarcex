@@ -125,7 +125,8 @@ public class ParallelWarcExtractorTest {
 	public void testExtractArgumentsWithInvalidNumThreadsArgument() throws IOException {
 
 		int numThreads = 0;
-		new ParallelWarcExtractor(new EncodingDetectorImpl(), new TextExtractorImpl(0, 0, false),
+		new ParallelWarcExtractor(new EncodingDetectorImpl(),
+				new TextExtractorImpl(0, 0, false, false),
 				OutputFormat.SOURCE, numThreads);
 	}
 

@@ -1,9 +1,12 @@
 package de.uni_leipzig.asv.tools.jwarcex.text_extraction;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
+import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.RawWarcDocument;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Assert;
@@ -20,7 +23,7 @@ public class TextExtractorImplTest {
 		int minDocumentLength = 40;
 		boolean extractTitle = false;
 		
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle, false);
 		
 		Assert.assertEquals(minLineLength, textExtractorImpl.getMineLineLength());
 		Assert.assertEquals(minDocumentLength, textExtractorImpl.getMinDocumentLength());
@@ -30,132 +33,149 @@ public class TextExtractorImplTest {
 	@Test
 	public void testGetTextWithMinLineLengthParameter() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(10, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(10, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
-		Document document = Jsoup.parse("<p>" + Strings.repeat("a", 10)
-				+ "</p>\n" + "<p>" + Strings.repeat("a", 9) + "</p>");
+		String html = "<p>" + Strings.repeat("a", 10)
+				+ "</p>\n" + "<p>" + Strings.repeat("a", 9) + "</p>";
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
+
 		String expectedText = Strings.repeat("a", 10);
 
-		String returnedText = textExtractorImpl.extractText(document);
-
-		Assert.assertNotNull(returnedText);
-		Assert.assertEquals(expectedText, returnedText);
+		Assert.assertNotNull(processedWarcDocument);
+		Assert.assertEquals(expectedText, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithMinDocumenLengthParameter() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 10, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 10, false,false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
-		Document document = Jsoup.parse("<p>" + Strings.repeat("a", 10) + "</p>\n");
+		String html = "<p>" + Strings.repeat("a", 10) + "</p>\n";
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
+
 		String expectedText = Strings.repeat("a", 10);
 
-		String returnedText = textExtractorImpl.extractText(document);
-
-		Assert.assertNotNull(returnedText);
-		Assert.assertEquals(expectedText, returnedText);
+		Assert.assertNotNull(processedWarcDocument);
+		Assert.assertEquals(expectedText, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithMinDocumenLengthParameterAndTextIsTooShort() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 10, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 10, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
-		Document document = Jsoup.parse("<p>" + Strings.repeat("a", 9) + "</p>");
-		String returnedText = textExtractorImpl.extractText(document);
+		String html = "<p>" + Strings.repeat("a", 9) + "</p>";
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
-		Assert.assertNull(returnedText);
+		Assert.assertNull(processedWarcDocument);
 	}
 
 
 	@Test
 	public void testGetTextWithTable() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/table1.txt")));
-		Document document = Jsoup.parse(html);
-		String text = textExtractorImpl.extractText(document);
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
 		String expected = "C1 C2\na b\nc d";
-		Assert.assertEquals(expected, text);
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithTableSimple() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/table2.txt")));
-		Document document = Jsoup.parse(html);
-		String text = textExtractorImpl.extractText(document);
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
 		String expected = "a b\nc d\ne f";
-		Assert.assertEquals(expected, text);
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithLinks() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/links.txt")));
-		Document document = Jsoup.parse(html);
-		String text = textExtractorImpl.extractText(document);
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
 		String expected = "FirstLink SecondLink";
-		Assert.assertEquals(expected, text);
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithTitle() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, true);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, true, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/document_title.txt")));
-		Document document = Jsoup.parse(html);
-		String text = textExtractorImpl.extractText(document);
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
 		// leading \n is probably superfluous
 		String expected = "\ntitle\ntext";
-		Assert.assertEquals(expected, text);
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testGetTextWithoutTitle() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/document_title.txt")));
-		Document document = Jsoup.parse(html);
-		String text = textExtractorImpl.extractText(document);
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
 
 		String expected = "text";
-		Assert.assertEquals(expected, text);
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
 	}
 
 
 	@Test
 	public void testWhitespaceHandling() throws IOException {
 
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, false);
+		Assert.assertNull(textExtractorImpl.getDomContentExtrator());
 
 		String htmlMinified = new String(
 				Files.readAllBytes(Paths.get("src/test/resources/whitespace_test/table1_minified.txt")));
 		Document documentMinified = Jsoup.parse(htmlMinified);
+		ProcessedWarcDocument processedWarcDocumentMinified = textExtractorImpl.getText(
+				this.toRawWarcDocument(htmlMinified),
+				StandardCharsets.UTF_8);
 
 		String htmlNormal = new String(
 				Files.readAllBytes(Paths.get("src/test/resources/whitespace_test/table1_normal.txt")));
-		Document documentNormal = Jsoup.parse(htmlNormal);
+		ProcessedWarcDocument processedWarcDocumentNormal = textExtractorImpl.getText(
+				this.toRawWarcDocument(htmlNormal),
+				StandardCharsets.UTF_8);
 
-		String textMinified = textExtractorImpl.extractText(documentMinified);
-		String textNormal = textExtractorImpl.extractText(documentNormal);
+		String textMinified = processedWarcDocumentMinified.getContent();
+		String textNormal = processedWarcDocumentNormal.getContent();
 
 		Assert.assertEquals(textMinified, textNormal);
 	}
@@ -168,7 +188,7 @@ public class TextExtractorImplTest {
 		int minDocumentLength = 40;
 		boolean extractTitle = false;
 		
-		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle);
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(minLineLength, minDocumentLength, extractTitle, false);
 		
 		TextExtractorImpl clonedTextEctractor = (TextExtractorImpl) textExtractorImpl.clone();
 		Assert.assertNotEquals(textExtractorImpl, clonedTextEctractor);
@@ -177,5 +197,27 @@ public class TextExtractorImplTest {
 		Assert.assertEquals(minDocumentLength, clonedTextEctractor.getMinDocumentLength());
 		Assert.assertFalse(clonedTextEctractor.extractTitle());
 	}
+
+
+	@Test
+	public void testWithContentExtraction() throws IOException {
+
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, true);
+
+		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/document4_content_extraction.txt")));
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
+
+		Assert.assertFalse(processedWarcDocument.getContent().contains("link with long text"));
+		Assert.assertNotNull(textExtractorImpl.getDomContentExtrator());
+	}
+
+
+	protected RawWarcDocument toRawWarcDocument(String html) {
+
+		return new RawWarcDocument("warc record id",
+				"any location", "2020-02-02", html.getBytes(StandardCharsets.UTF_8));
+	}
+
 
 }

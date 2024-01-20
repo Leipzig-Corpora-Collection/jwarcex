@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import com.github.chschroeder.dom.DomContentExtrator;
+import com.github.chschroeder.dom.TextDensityContentExtractor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,20 +40,10 @@ import de.uni_leipzig.asv.tools.jwarcex.text_extraction.util.DateUtil;
 public class TextExtractorImpl implements TextExtractor {
 
 	/**
-	 * "Minimum characters per Line"-Parameter name.
-	 */
-	public static final String PARAMETER_MIN_LINE_LENGTH = "minLineLength";
-
-	/**
 	 * Only elements with more characters than this length will be added to the document's total text.
 	 * Elements with less than this number of characters will be ignored.
 	 */
 	public static final int PARAMETER_MIN_LINE_LENGTH_DEFAULT = 20;
-
-	/**
-	 * "Minimum characters per document"-Parameter.
-	 */
-	public static final String PARAMETER_MIN_DOCUMENT_LENGTH = "minDocumentLength";
 
 	/**
 	 * Default value for minDocumentLength.
@@ -59,14 +51,14 @@ public class TextExtractorImpl implements TextExtractor {
 	public static final int PARAMETER_MIN_DOCUMENT_LENGTH_DEFAULT = 80;
 
 	/**
-	 * "Extract the title"-Parameter name.
-	 */
-	public static final String PARAMETER_EXTRACT_TITLE = "extractTitle";
-
-	/**
 	 * Default value for extractTitle.
 	 */
 	public static final boolean PARAMETER_EXTRACT_TITLE_DEFAULT = false;
+
+	/**
+	 * Default value for performContentExtraction.
+	 */
+	public static final boolean PARAMETER_PERFORM_CONTENT_EXTRACTION_DEFAULT = false;
 
 	/**
 	 * Table cell tags.
@@ -99,6 +91,11 @@ public class TextExtractorImpl implements TextExtractor {
 	private final DateUtil dateUtil = new DateUtil();
 
 	/**
+	 * A content extractor, which preprocesses a document before text extraction (optional).
+	 */
+	private DomContentExtrator domContentExtrator = null;
+
+	/**
 	 * Only elements with more characters than this length will be added to the document's total text.
 	 * Elements with less than this number of characters will be ignored
 	 */
@@ -114,17 +111,18 @@ public class TextExtractorImpl implements TextExtractor {
 	 */
 	private final boolean extractTitle;
 
-
 	/**
 	 * For testing purposes only.
 	 */
 	protected TextExtractorImpl() {
 
-		this(PARAMETER_MIN_LINE_LENGTH_DEFAULT, PARAMETER_MIN_DOCUMENT_LENGTH_DEFAULT, PARAMETER_EXTRACT_TITLE_DEFAULT);
+		this(PARAMETER_MIN_LINE_LENGTH_DEFAULT, PARAMETER_MIN_DOCUMENT_LENGTH_DEFAULT, PARAMETER_EXTRACT_TITLE_DEFAULT,
+				PARAMETER_PERFORM_CONTENT_EXTRACTION_DEFAULT);
 	}
 
 
-	public TextExtractorImpl(int minLineLength, int minDocumentLength, boolean extractTitle) {
+	public TextExtractorImpl(int minLineLength, int minDocumentLength, boolean extractTitle,
+							 boolean performContentExtraction) {
 
 		this.minLineLength = minLineLength;
 		this.validateMinLineLength();
@@ -133,6 +131,11 @@ public class TextExtractorImpl implements TextExtractor {
 		this.validateMinDocumentLength();
 
 		this.extractTitle = extractTitle;
+
+		if (performContentExtraction) {
+			this.domContentExtrator = new TextDensityContentExtractor();
+		}
+
 	}
 
 
@@ -162,15 +165,20 @@ public class TextExtractorImpl implements TextExtractor {
 		Document document = Jsoup.parse(text);
 		document = this.handleNoscriptTags(document);
 
+		if (this.domContentExtrator != null) {
+			Element content = domContentExtrator.extractContent(document);
+			return this.extractFromHtml(rawWarcDocument, charset, content);
+		}
+
 		return this.extractFromHtml(rawWarcDocument, charset, document);
 
 	}
 
 
 	protected ProcessedWarcDocument extractFromHtml(RawWarcDocument rawWarcDocument, Charset charset,
-			Document document) {
+			Element element) {
 
-		String extractedText = extractText(document);
+		String extractedText = extractText(element);
 		if (extractedText == null) {
 
 			return null;
@@ -182,19 +190,19 @@ public class TextExtractorImpl implements TextExtractor {
 	}
 
 
-	protected String extractText(Document document) {
+	protected String extractText(Element element) {
 
 		StringBuilder extractedText = new StringBuilder();
 
 		if (this.extractTitle) {
-			extractedText.append(this.getText(document.selectFirst("head title")));
+			extractedText.append(this.getText(element.selectFirst("head title")));
 			extractedText.append('\n');
 		}
 
-		Element startElement = document.selectFirst("body");
+		Element startElement = element.selectFirst("body");
 		if (startElement == null) {
 
-			startElement = document;
+			startElement = element;
 		}
 
 		String bodyText = this.getText(startElement).strip();
@@ -362,11 +370,19 @@ public class TextExtractorImpl implements TextExtractor {
 		
 		return this.extractTitle;
 	}
-	
-	
+
+
+	public DomContentExtrator getDomContentExtrator() {
+
+		return this.domContentExtrator;
+	}
+
+
 	public TextExtractor clone() {
-		
-		return new TextExtractorImpl(this.minLineLength, this.minDocumentLength, this.extractTitle);
+
+		boolean performContentExtraction = this.domContentExtrator != null;
+		return new TextExtractorImpl(this.minLineLength, this.minDocumentLength, this.extractTitle,
+				performContentExtraction);
 	}
 	
 }

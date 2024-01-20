@@ -36,6 +36,7 @@ public class ProcessWarcRunnableTest {
 		TextExtractor textExtractor = new TextExtractorImpl(
 				TextExtractorImpl.PARAMETER_MIN_LINE_LENGTH_DEFAULT,
 				TextExtractorImpl.PARAMETER_MIN_DOCUMENT_LENGTH_DEFAULT,
+				false,
 				false);
 		ProcessWarcRunnable processWarcRunnable = new ProcessWarcRunnable(rawWarcDocuments, queue,
 				new EncodingDetectorImpl(), textExtractor);

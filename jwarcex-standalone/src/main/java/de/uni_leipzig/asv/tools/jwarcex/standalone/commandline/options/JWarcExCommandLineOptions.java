@@ -42,6 +42,10 @@ public class JWarcExCommandLineOptions implements CommandLineOptions {
 						+ "that will be tolerated. Documents crossing this threshold will be dropped. "
 						+ "Setting this parameter to -1 will completely disable this functionality. (Default: "
 						+ CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT + ")");
+		options.addOption("x", "enable_content_extraction",false,
+				"Enables dom-based content extraction. Content extraction is performed prior to text " +
+						"extraction and selects are subtree (and optionally prunes it) so that text is only extracted " +
+						"from elements with a high ratio of text to html tags (Disabled by default)");
 
 		options.addOption("X", true,
 				"Sets a list of experimental options (comma-separated keys or key-values, e.g. '-X a,b,c=1').");

@@ -88,7 +88,7 @@ public class CorrectingTextExtractorImplTest {
 	public void testGetTextWithCustomThreshold() {
 
 		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor(
-				new TextExtractorImpl(0, 0, false), 2);
+				new TextExtractorImpl(0, 0, false, false), 2);
 
 		String html = "<body>Text with visible encoding errors �</body>";
 		RawWarcDocument rawWarcDocument = this.getRawWarcDocumentFromString(html);
@@ -104,7 +104,7 @@ public class CorrectingTextExtractorImplTest {
 	public void testGetTextWithDisabledFunctionality() {
 
 		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor(
-				new TextExtractorImpl(0, 0, false), -1);
+				new TextExtractorImpl(0, 0, false, false), -1);
 
 		String html = "<body>Text with visible encoding errors �</body>";
 		RawWarcDocument rawWarcDocument = this.getRawWarcDocumentFromString(html);
@@ -120,7 +120,7 @@ public class CorrectingTextExtractorImplTest {
 	public void testClone() {
 		
 		CorrectingTextExtractor customCorrectingTextExtractor = new CorrectingTextExtractor(
-				new TextExtractorImpl(0, 0, false), 2);
+				new TextExtractorImpl(0, 0, false, false), 2);
 		
 		CorrectingTextExtractor clonedTextExtractor = (CorrectingTextExtractor) customCorrectingTextExtractor.clone();
 		Assert.assertNotEquals(customCorrectingTextExtractor, clonedTextExtractor);

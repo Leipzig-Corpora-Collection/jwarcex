@@ -7,13 +7,19 @@ public class WarcExtractorAdditionalParameters {
 
 	// core settings
 	private final boolean isCompressed;
+
 	private final int minLineLength;
+
 	private final int minDocumentLength;
+
 	private final int maxEncodingErrors;
 
 	// additional settings
 	private int numberOfThreads = ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT;
+
 	private OutputFormat outputFormat = OutputFormat.SOURCE;
+
+	private boolean contentExtraction = false;
 
 
 	public WarcExtractorAdditionalParameters(boolean isCompressed, int minLineLength, int minDocumentLength,
@@ -71,6 +77,16 @@ public class WarcExtractorAdditionalParameters {
 	public void setOutputFormat(OutputFormat outputFormat) {
 
 		this.outputFormat = outputFormat;
+	}
+
+
+	public boolean isContentExtractionEnabled() {
+		return contentExtraction;
+	}
+
+
+	public void setContentExtractionEnabled(boolean contentExtraction) {
+		this.contentExtraction = contentExtraction;
 	}
 
 }

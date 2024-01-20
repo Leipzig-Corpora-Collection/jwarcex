@@ -110,8 +110,10 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 	 */
 	protected ParallelWarcExtractor() {
 
-		this(new EncodingDetectorImpl(), new TextExtractorImpl(0, 0, false),
-				PARAMETER_OUTPUT_FORMAT_DEFAULT, PARAMETER_NUMBER_OF_THREADS_DEFAULT);
+		this(new EncodingDetectorImpl(),
+				new TextExtractorImpl(0, 0, false, false),
+				PARAMETER_OUTPUT_FORMAT_DEFAULT,
+				PARAMETER_NUMBER_OF_THREADS_DEFAULT);
 	}
 
 

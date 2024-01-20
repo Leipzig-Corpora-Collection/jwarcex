@@ -21,7 +21,8 @@ public class WarcExtractorBuilder {
 
 		TextExtractor baseTextExtractor = new TextExtractorImpl(additionalParameters.getMinLineLength(),
 				additionalParameters.getMinDocumentLength(),
-				false);
+				false,
+				additionalParameters.isContentExtractionEnabled());
 		TextExtractor textExtractor = new CorrectingTextExtractor(baseTextExtractor,
 				additionalParameters.getMaxEncodingErrors());
 

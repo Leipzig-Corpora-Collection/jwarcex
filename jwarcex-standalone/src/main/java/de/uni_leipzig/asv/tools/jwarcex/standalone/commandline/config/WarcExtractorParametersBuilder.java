@@ -34,6 +34,10 @@ public class WarcExtractorParametersBuilder {
 
 		warcExtractorAdditionalParameters.setNumberOfThreads(numberOfThreads);
 
+		if (commandLine.hasOption("x")) {
+			warcExtractorAdditionalParameters.setContentExtractionEnabled(true);
+		}
+
 		return warcExtractorAdditionalParameters;
 	}
 

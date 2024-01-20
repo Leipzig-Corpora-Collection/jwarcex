@@ -36,6 +36,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
 		Assert.assertEquals(ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT,
 				warcExtractorAdditionalParameters.getNumberOfThreads());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 	}
 
 
@@ -57,6 +58,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
 		Assert.assertEquals(ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT,
 				warcExtractorAdditionalParameters.getNumberOfThreads());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 	}
 
 
@@ -81,6 +83,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
 		Assert.assertEquals(ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT,
 				warcExtractorAdditionalParameters.getNumberOfThreads());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 	}
 
 
@@ -106,6 +109,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
 		Assert.assertEquals(ParallelWarcExtractor.PARAMETER_NUMBER_OF_THREADS_DEFAULT,
 				warcExtractorAdditionalParameters.getNumberOfThreads());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 	}
 
 
@@ -127,6 +131,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMinDocumentLength());
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 		Assert.assertEquals(OutputFormat.JSONL, warcExtractorAdditionalParameters.getOutputFormat());
 	}
 
@@ -149,6 +154,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMinDocumentLength());
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 		Assert.assertEquals(OutputFormat.WET, warcExtractorAdditionalParameters.getOutputFormat());
 	}
 
@@ -171,6 +177,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMinDocumentLength());
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 		Assert.assertEquals(OutputFormat.XML, warcExtractorAdditionalParameters.getOutputFormat());
 	}
 
@@ -195,6 +202,7 @@ public class WarcExtractorParametersBuilderTest {
 				warcExtractorAdditionalParameters.getMinDocumentLength());
 		Assert.assertEquals(CorrectingTextExtractor.PARAMETER_MAX_OCCURRENCES_DEFAULT,
 				warcExtractorAdditionalParameters.getMaxEncodingErrors());
+		Assert.assertFalse(warcExtractorAdditionalParameters.isContentExtractionEnabled());
 		Assert.assertEquals(newNumThreadsValue, warcExtractorAdditionalParameters.getNumberOfThreads());
 	}
 }
