@@ -6,6 +6,16 @@ package de.uni_leipzig.asv.tools.jwarcex.core.constant;
 public final class WarcConstants {
 
 	/**
+	 * Field name for the WarcHeader "Content-Type".
+	 */
+	public static final String CONTENT_TYPE = "Content-Type";
+
+	/**
+	 * Field name for the WarcHeader "Content-Length".
+	 */
+	public static final String CONTENT_LENGTH = "Content-Length";
+
+	/**
 	 * Field name for the WarcHeader "WARC-Record-ID".
 	 */
 	public static final String WARC_HEADER_RECORD_ID_KEY = "WARC-Record-ID";
@@ -30,6 +40,10 @@ public final class WarcConstants {
 	 */
 	public static final String WARC_HEADER_REFERS_TO = "WARC-Refers-To";
 
+	/**
+	 * Field name for the WarcHeader "WARC-Block-Digest".
+	 */
+	public static final String WARC_HEADER_BLOCK_DIGEST = "WARC-Block-Digest";
 
 	private WarcConstants() {
 

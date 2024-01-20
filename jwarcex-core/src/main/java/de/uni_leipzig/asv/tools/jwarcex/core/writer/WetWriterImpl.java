@@ -1,15 +1,19 @@
 package de.uni_leipzig.asv.tools.jwarcex.core.writer;
 
+import com.google.common.io.BaseEncoding;
 import de.uni_leipzig.asv.tools.jwarcex.core.constant.WarcConstants;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jwat.common.Base32;
 import org.jwat.warc.WarcRecord;
 import org.jwat.warc.WarcWriterFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +34,10 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
     private final DateFormat dateFormatGmt = new SimpleDateFormat(ISO_8601_DATE_STRING);
 
+    private final BaseEncoding encoder = BaseEncoding.base32();
+
+    private MessageDigest digest;
+
     private OutputStream outputStream;
 
     private org.jwat.warc.WarcWriter jwatWarcWriter;
@@ -38,6 +46,12 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
         this.outputStream = outputStream;
         this.jwatWarcWriter = WarcWriterFactory.getWriterUncompressed(this.outputStream);
+
+        try {
+            this.digest = MessageDigest.getInstance("sha1");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 
         String warcInfoContentBlock = "software : jwarcex" + this.CRLF;
         this.writeWarcInfo(warcInfoContentBlock);
@@ -51,8 +65,9 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
         byte[] contentBlockBytes = contentBlock.getBytes(StandardCharsets.UTF_8);
 
         WarcRecord warcRecord = this.getWarcWetRecord(processedWarcDocument, this.jwatWarcWriter);
-        warcRecord.header.addHeader("Content-Type", "text/plain");
-        warcRecord.header.addHeader("Content-Length", String.valueOf(Long.valueOf(contentBlockBytes.length)));
+        warcRecord.header.addHeader(WarcConstants.CONTENT_TYPE, "text/plain");
+        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH, String.valueOf(Long.valueOf(contentBlockBytes.length)));
+        this.addBlockDigest(warcRecord, contentBlockBytes);
         this.jwatWarcWriter.writeHeader(warcRecord);
 
         this.jwatWarcWriter.writePayload(contentBlockBytes);
@@ -64,7 +79,7 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
         byte[] contentBlockBytes = contentBlock.getBytes(StandardCharsets.UTF_8);
 
         WarcRecord warcRecord = this.getWarcInfoRecord(this.jwatWarcWriter);
-        warcRecord.header.addHeader("Content-Type", "application/warc-fields");
+        warcRecord.header.addHeader(WarcConstants.CONTENT_TYPE, "application/warc-fields");
         warcRecord.header.addHeader("Content-Length", String.valueOf(Long.valueOf(contentBlockBytes.length)));
         this.jwatWarcWriter.writeHeader(warcRecord);
 
@@ -81,6 +96,14 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_RECORD_ID_KEY, this.getRecordIdKey());
 
         return warcRecord;
+    }
+
+
+    protected void addBlockDigest(WarcRecord warcRecord, byte[] contentBlockBytes) {
+
+        byte[] sha1Checksum = this.digest.digest(contentBlockBytes);
+        String blockDigestBase32 = "sha1:" + this.encoder.encode(sha1Checksum);
+        warcRecord.header.addHeader(WarcConstants.WARC_HEADER_BLOCK_DIGEST, blockDigestBase32);
     }
 
 

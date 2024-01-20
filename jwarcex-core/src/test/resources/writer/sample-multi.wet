@@ -1,6 +1,6 @@
 WARC/1.0
 WARC-Type: warcinfo
-WARC-Record-ID: <urn:uuid:fbc022ed-27cc-4df2-a71f-04c0ba053965>
+WARC-Record-ID: <urn:uuid:00000000-0000-0000-0001-000000000001>
 WARC-Date: 2024-01-14T15:20:06Z
 Content-Length: 20
 Content-Type: application/warc-fields
@@ -11,21 +11,23 @@ software : jwarcex
 WARC/1.0
 WARC-Type: conversion
 WARC-Record-ID: <urn:uuid:00000000-0000-0000-0001-000000000001>
-WARC-Date: 2017-01-01T00:00:00Z
+WARC-Date: 2024-01-14T15:20:06Z
 Content-Length: 3
 Content-Type: text/plain
-WARC-Refers-To: <urn:uuid:00000000-0000-0000-0000-000000000000>
+WARC-Block-Digest: sha1:VGMT4NSHA2AWVOR6EVYXQUGCNSONBWE5
+WARC-Refers-To: <urn:uuid:00000000-0000-0000-0001-000000000001>
 WARC-Target-URI: http://localhost/
 
 abc
 
 WARC/1.0
 WARC-Type: conversion
-WARC-Record-ID: <urn:uuid:00000000-0000-0000-0001-000000000002>
-WARC-Date: 2017-01-01T00:00:00Z
+WARC-Record-ID: <urn:uuid:00000000-0000-0000-0001-000000000001>
+WARC-Date: 2024-01-14T15:20:06Z
 Content-Length: 3
 Content-Type: text/plain
-WARC-Refers-To: <urn:uuid:00000000-0000-0000-0000-000000000000>
+WARC-Block-Digest: sha1:LCOCEM22HAPRELISSIS7LQF2GBLO2WAR
+WARC-Refers-To: <urn:uuid:00000000-0000-0000-0001-000000000001>
 WARC-Target-URI: http://localhost/
 
 def
