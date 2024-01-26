@@ -1,0 +1,36 @@
+<html>
+  <body>
+    <nav>
+      <ol>
+        <li>menu item 1</li>
+        <li>menu item 2</li>
+        <li>menu item 3</li>
+      </ol>
+    </nav>
+    <div role="navigation">navigation</div>
+    <div role="search">search</div>
+    <header>logo here</header>
+    <article>
+      <header>subheader here</header>
+      <div>
+        <h1>header 1</h1>
+        <p>Text1 Text1 Text1 Text1 Text1 Text1 Text1 Text1 Text1.</p>
+        <p>Text1 Text1 Text1 Text1 Text1 Text1 Text1 Text1 Text1.</p>
+        <h2>header 2</h2>
+        <p>Text2 Text2 Text2 Text2 Text2 Text2 Text2 Text2 Text2.</p>
+        <p>Text2 Text2 Text2 Text2 Text2 Text2 Text2 Text2 Text2.</p>
+      </div>
+      <div>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+        <a href="">link with long text</a>
+      </div>
+    </article>
+    <footer>&copy; 2024</footer>
+  </body>
+</html>

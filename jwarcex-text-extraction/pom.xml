@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>com.github.chschroeder.dom</groupId>
 			<artifactId>dom-based-content-extraction</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

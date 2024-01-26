@@ -1,7 +1,9 @@
 package de.uni_leipzig.asv.tools.jwarcex.text_extraction;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -69,6 +71,12 @@ public class TextExtractorImpl implements TextExtractor {
 	 * Do not add a line break for these tags.
 	 */
 	private static final Set<Tag> FORCE_NONBREAK_ELEMENTS = Sets.newHashSet(Tag.valueOf("thead"), Tag.valueOf("tbody"));
+
+	/**
+	 * Selectors for non-content elements to be removed.
+	 */
+	private final static List<String> SEMANTIC_BOILERPLATE_SELECTOR = Arrays.asList("header", "footer", "nav", "menu",
+			"search", "[role='main']", "[role='search']", "[role='navigation']");
 
 	/**
 	 * Anchor tag.
@@ -163,7 +171,9 @@ public class TextExtractorImpl implements TextExtractor {
 
 		String text = new String(rawWarcDocument.getContent(), charset);
 		Document document = Jsoup.parse(text);
+
 		document = this.handleNoscriptTags(document);
+		document = this.handleSemanticTags(document);
 
 		if (this.domContentExtrator != null) {
 			Element content = domContentExtrator.extractContent(document);
@@ -239,6 +249,21 @@ public class TextExtractorImpl implements TextExtractor {
 	}
 
 
+	private Document handleSemanticTags(Document document) {
+
+		for (String selector: SEMANTIC_BOILERPLATE_SELECTOR) {
+			Elements elements = document.select(selector);
+
+			for (Element element : elements) {
+
+				element.remove();
+			}
+		}
+
+		return document;
+	}
+
+
 	/**
 	 * Extracts the text from the given element.
 	 *
@@ -260,7 +285,7 @@ public class TextExtractorImpl implements TextExtractor {
 			Node node = stack.pop();
 			if (!visited.contains(node)) {
 
-				visit(stack, visited, sb, node);
+				visit(visited, sb, node);
 				for (int i = node.childNodeSize() - 1; i >= 0; i--) {
 
 					Node childNode = node.childNode(i);
@@ -275,7 +300,7 @@ public class TextExtractorImpl implements TextExtractor {
 	}
 
 
-	protected void visit(Stack<Node> stack, Set<Node> visited, StringBuilder sb, Node node) {
+	protected void visit(Set<Node> visited, StringBuilder sb, Node node) {
 		if (node instanceof TextNode) {
 
 			TextNode textNode = (TextNode) node;

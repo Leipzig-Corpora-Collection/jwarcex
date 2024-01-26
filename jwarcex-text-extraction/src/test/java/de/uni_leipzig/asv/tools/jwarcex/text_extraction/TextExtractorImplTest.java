@@ -213,6 +213,21 @@ public class TextExtractorImplTest {
 	}
 
 
+	@Test
+	public void testSemanticElements() throws IOException {
+
+		TextExtractorImpl textExtractorImpl = new TextExtractorImpl(0, 0, false, true);
+
+		String expected = new String(Files.readAllBytes(Paths.get("src/test/resources/expected/document5_semantic_elements.txt")));
+
+		String html = new String(Files.readAllBytes(Paths.get("src/test/resources/document5_semantic_elements.txt")));
+		ProcessedWarcDocument processedWarcDocument = textExtractorImpl.getText(this.toRawWarcDocument(html),
+				StandardCharsets.UTF_8);
+
+		Assert.assertEquals(expected, processedWarcDocument.getContent());
+	}
+
+
 	protected RawWarcDocument toRawWarcDocument(String html) {
 
 		return new RawWarcDocument("warc record id",
