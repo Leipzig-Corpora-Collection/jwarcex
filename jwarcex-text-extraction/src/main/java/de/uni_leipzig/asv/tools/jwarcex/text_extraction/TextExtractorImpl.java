@@ -211,7 +211,8 @@ public class TextExtractorImpl implements TextExtractor {
 		return new ProcessedWarcDocument(rawWarcDocument.getWarcRecordId(),
 				rawWarcDocument.getUrl(),
 				canonicalUrl,
-				this.dateUtil.getFormattedDate(rawWarcDocument.getDate()),
+				// https://github.com/iipc/warc-specifications/issues/40
+				this.dateUtil.getFormattedDateNow(),
 				extractedText.toString(),
 				charset.name());
 

@@ -3,6 +3,9 @@ package de.uni_leipzig.asv.tools.jwarcex.text_extraction.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -28,6 +31,7 @@ public class DateUtil {
 	}
 
 
+	// TODO: this will likely be removed
 	/**
 	 * Parses the date from the dateString of the warcRecord's "Warc-Date" header field and returns a
 	 * formatted date string (yyyy-MM-dd).
@@ -52,6 +56,16 @@ public class DateUtil {
 			return null;
 		}
 		return this.dateFormatOutputGmt.format(date);
+	}
+
+
+	/**
+	 * Creates a formatted UTC timestamp of the current time (now).
+	 *
+	 * @return A formatted UTC timestamp in the format of "YYYY-MM-DDThh:mm:ssZ".
+	 */
+	public String getFormattedDateNow() {
+		return ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("YYYY-MM-DD'T'hh:mm:ss'Z'"));
 	}
 
 }
