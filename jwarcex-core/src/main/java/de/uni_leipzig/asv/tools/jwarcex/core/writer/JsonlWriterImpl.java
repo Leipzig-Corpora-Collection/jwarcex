@@ -3,23 +3,13 @@ package de.uni_leipzig.asv.tools.jwarcex.core.writer;
 import com.dslplatform.json.DslJson;
 import com.dslplatform.json.JsonWriter;
 import com.dslplatform.json.runtime.Settings;
-import com.google.common.base.Charsets;
-import de.uni_leipzig.asv.tools.jwarcex.core.constant.WarcConstants;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jwat.warc.WarcRecord;
-import org.jwat.warc.WarcWriterFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
 
 
 /**
@@ -58,7 +48,7 @@ public class JsonlWriterImpl implements WarcWriter, AutoCloseable {
 
         jsonWriter.writeString("url");
         jsonWriter.writeByte(JsonWriter.SEMI);
-        jsonWriter.writeString(processedWarcDocument.getLocation());
+        jsonWriter.writeString(processedWarcDocument.getUrl());
         jsonWriter.writeByte(JsonWriter.COMMA);
 
         jsonWriter.writeString("text");

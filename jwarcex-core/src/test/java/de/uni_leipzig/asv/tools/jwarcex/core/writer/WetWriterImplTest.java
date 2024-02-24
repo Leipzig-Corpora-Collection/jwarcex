@@ -24,6 +24,8 @@ public class WetWriterImplTest {
 		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"http://localhost/",
+				"http://localhost/",
+				"Title\r\nLine2\n",
 				"2017-01-01",
 				"abc",
 				"UTF-8");
@@ -48,6 +50,8 @@ public class WetWriterImplTest {
 		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"http://localhost/",
+				"http://localhost/",
+				"Title",
 				"2017-01-01",
 				"abc",
 				"UTF-8");
@@ -55,6 +59,8 @@ public class WetWriterImplTest {
 		ProcessedWarcDocument processedWarcDocumentTwo = new ProcessedWarcDocument(
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"http://localhost/",
+				"http://localhost/",
+				"Title",
 				"2017-01-01",
 				"def",
 				"UTF-8");
@@ -80,6 +86,8 @@ public class WetWriterImplTest {
 		ProcessedWarcDocument processedWarcDocument = new ProcessedWarcDocument(
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"http://localhost/",
+				"http://localhost/",
+				"Title",
 				"2017-01-01",
 				"abc",
 				"UTF-8");

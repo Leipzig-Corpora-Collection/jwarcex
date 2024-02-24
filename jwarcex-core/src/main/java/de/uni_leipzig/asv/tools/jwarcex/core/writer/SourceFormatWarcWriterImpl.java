@@ -40,7 +40,7 @@ public class SourceFormatWarcWriterImpl implements WarcWriter, AutoCloseable {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<source><location>");
-		sb.append(Objects.toString(processedWarcDocument.getLocation()));
+		sb.append(Objects.toString(processedWarcDocument.getUrl()));
 		sb.append("</location><date>");
 		sb.append(processedWarcDocument.getDate());
 		sb.append("</date>");

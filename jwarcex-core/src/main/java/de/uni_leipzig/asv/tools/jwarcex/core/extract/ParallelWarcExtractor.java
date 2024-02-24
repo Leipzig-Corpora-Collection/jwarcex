@@ -183,7 +183,7 @@ public class ParallelWarcExtractor extends AbstractGzipCapableWarcExtractor impl
 	@Override
 	protected void processWarc(RawWarcDocument rawWarcDocument) {
 
-		if (rawWarcDocument.getLocation() != null && rawWarcDocument.getLocation().endsWith("robots.txt")) {
+		if (rawWarcDocument.getUrl() != null && rawWarcDocument.getUrl().endsWith("robots.txt")) {
 
 			return;
 		}

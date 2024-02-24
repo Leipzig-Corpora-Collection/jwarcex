@@ -54,7 +54,7 @@ public class XmlWarcWriterImpl implements WarcWriter, AutoCloseable {
 
 		sb.append("        <meta>\n");
 		sb.append("            <entry name=\"location\">");
-		sb.append(Objects.toString(processedWarcDocument.getLocation()));
+		sb.append(Objects.toString(processedWarcDocument.getUrl()));
 		sb.append("</entry>\n            <entry name=\"date\">");
 		sb.append(processedWarcDocument.getDate());
 		sb.append("</entry>\n            <entry name=\"encoding\">");

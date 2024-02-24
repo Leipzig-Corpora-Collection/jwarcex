@@ -1,6 +1,5 @@
 package de.uni_leipzig.asv.tools.jwarcex.core.concurrency;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -8,7 +7,6 @@ import java.util.concurrent.BlockingQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.uni_leipzig.asv.tools.jwarcex.core.util.WarcRecordUtil;
 import de.uni_leipzig.asv.tools.jwarcex.encoding_detection.EncodingDetector;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.TextExtractor;
 import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarcDocument;
@@ -54,7 +52,7 @@ public class ProcessWarcRunnable implements Runnable {
 			} else {
 
 				LOGGER.warn("No encoding could be detected for document with location: {}",
-						String.valueOf(rawWarcDocument.getLocation()));
+						String.valueOf(rawWarcDocument.getUrl()));
 			}
 
 		}
@@ -80,7 +78,7 @@ public class ProcessWarcRunnable implements Runnable {
 
 				this.addProcessedEntryToQueue(processedWarcDocument);
 			} else {
-				LOGGER.debug("No text extracted from document with location={}", rawWarcDocument.getLocation());
+				LOGGER.debug("No text extracted from document with location={}", rawWarcDocument.getUrl());
 			}
 
 		} catch (IllegalArgumentException e) {

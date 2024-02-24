@@ -6,7 +6,7 @@ import de.uni_leipzig.asv.tools.jwarcex.text_extraction.structures.ProcessedWarc
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jwat.warc.WarcRecord;
-import org.jwat.warc.WarcWriterFactory;
+import warc.WarcWriterExtendedUncompressed;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,11 +15,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -50,7 +48,7 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
     public WetWriterImpl(OutputStream outputStream) throws IOException {
 
         this.outputStream = outputStream;
-        this.jwatWarcWriter = WarcWriterFactory.getWriterUncompressed(this.outputStream);
+        this.jwatWarcWriter = new WarcWriterExtendedUncompressed(this.outputStream);
 
         try {
             this.digest = MessageDigest.getInstance("sha1");
@@ -71,12 +69,19 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
     @Override
     public void write(ProcessedWarcDocument processedWarcDocument) throws IOException {
 
+        WarcRecord warcRecord = this.getWarcWetRecord(processedWarcDocument, this.jwatWarcWriter);
+        if (processedWarcDocument.getTitle() != null) {
+            warcRecord.header.addHeader(WarcConstants.WET_FIELD_TITLE, processedWarcDocument.getTitle());
+        }
+        if (processedWarcDocument.getCanonicalUrl() != null) {
+            warcRecord.header.addHeader(WarcConstants.WET_FIELD_CANONICAL_URL, processedWarcDocument.getCanonicalUrl());
+        }
+
         String contentBlock = processedWarcDocument.getContent();
         byte[] contentBlockBytes = contentBlock.getBytes(StandardCharsets.UTF_8);
-
-        WarcRecord warcRecord = this.getWarcWetRecord(processedWarcDocument, this.jwatWarcWriter);
         warcRecord.header.addHeader(WarcConstants.CONTENT_TYPE, "text/plain");
-        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH, String.valueOf(Long.valueOf(contentBlockBytes.length)));
+        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH,
+                String.valueOf(Long.valueOf(contentBlockBytes.length)));
         this.addBlockDigest(warcRecord, contentBlockBytes);
         this.jwatWarcWriter.writeHeader(warcRecord);
 
@@ -90,7 +95,8 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
         WarcRecord warcRecord = this.getWarcInfoRecord(this.jwatWarcWriter);
         warcRecord.header.addHeader(WarcConstants.CONTENT_TYPE, "application/warc-fields");
-        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH, String.valueOf(Long.valueOf(contentBlockBytes.length)));
+        warcRecord.header.addHeader(WarcConstants.CONTENT_LENGTH,
+                String.valueOf(Long.valueOf(contentBlockBytes.length)));
         this.jwatWarcWriter.writeHeader(warcRecord);
 
         this.jwatWarcWriter.writePayload(contentBlockBytes);
@@ -129,7 +135,7 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
 
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_TYPE_KEY, "conversion");
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_LOCATION_KEY,
-                Objects.toString(processedWarcDocument.getLocation()));
+                Objects.toString(processedWarcDocument.getUrl()));
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_DATE_KEY, processedWarcDocument.getDate());
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_RECORD_ID_KEY, this.getRecordIdKey());
         warcRecord.header.addHeader(WarcConstants.WARC_HEADER_REFERS_TO, processedWarcDocument.getWarcRecordId());

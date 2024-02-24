@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import com.github.chschroeder.dom.DomContentExtrator;
 import com.github.chschroeder.dom.TextDensityContentExtractor;
@@ -94,6 +95,13 @@ public class TextExtractorImpl implements TextExtractor {
 	private static final int MAX_BLOCK_LEVEL_LINE_BREAKS = 2;
 
 	/**
+	 * Regular expression which filter characters that are invalid in warc field values.
+	 *
+	 * @see https://iipc.github.io/warc-specifications/specifications/warc-format/warc-1.0/#scope
+	 */
+	private static final Pattern WARC_FIELD_VALUE_INVALID_CHARACTERS = Pattern.compile("[\u0000-\u0031]");
+
+	/**
 	 * Date Util
 	 */
 	private final DateUtil dateUtil = new DateUtil();
@@ -177,25 +185,43 @@ public class TextExtractorImpl implements TextExtractor {
 
 		if (this.domContentExtrator != null) {
 			Element content = domContentExtrator.extractContent(document);
-			return this.extractFromHtml(rawWarcDocument, charset, content);
+			return this.extractFromHtml(rawWarcDocument, charset, document, content);
 		}
 
-		return this.extractFromHtml(rawWarcDocument, charset, document);
+		return this.extractFromHtml(rawWarcDocument, charset, document, document);
 
 	}
 
 
 	protected ProcessedWarcDocument extractFromHtml(RawWarcDocument rawWarcDocument, Charset charset,
-			Element element) {
+													Document document, Element startElement) {
 
-		String extractedText = extractText(element);
+		String extractedText = extractText(startElement);
 		if (extractedText == null) {
 
 			return null;
 		}
 
-		return new ProcessedWarcDocument(rawWarcDocument.getWarcRecordId(), rawWarcDocument.getLocation(),
-				this.dateUtil.getFormattedDate(rawWarcDocument.getDate()), extractedText.toString(), charset.name());
+		Element canonicalUrlElement = document.selectFirst("head link[rel=canonical]");
+		String canonicalUrl = null;
+		if (canonicalUrlElement != null) {
+			canonicalUrl = canonicalUrlElement.attr("href");
+		}
+
+		Element titleElement = document.selectFirst("head title");
+		String title = null;
+		if (titleElement != null) {
+			title = this.getText(titleElement);
+			title = WARC_FIELD_VALUE_INVALID_CHARACTERS.matcher(title).replaceAll(" ");
+		}
+
+		return new ProcessedWarcDocument(rawWarcDocument.getWarcRecordId(),
+				rawWarcDocument.getUrl(),
+				canonicalUrl,
+				title,
+				this.dateUtil.getFormattedDate(rawWarcDocument.getDate()),
+				extractedText.toString(),
+				charset.name());
 
 	}
 

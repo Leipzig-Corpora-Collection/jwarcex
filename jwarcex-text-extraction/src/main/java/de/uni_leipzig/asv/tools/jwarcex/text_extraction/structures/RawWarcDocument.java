@@ -7,17 +7,17 @@ public class RawWarcDocument {
 
 	private String warcRecordId;
 
-	private String location;
+	private String url;
 
 	private String date;
 
 	private byte[] content;
 
 
-	public RawWarcDocument(String warcRecordId, String location, String date, byte[] content) {
+	public RawWarcDocument(String warcRecordId, String url, String date, byte[] content) {
 
 		this.warcRecordId = warcRecordId;
-		this.location = location;
+		this.url = url;
 		this.date = date;
 		this.content = content;
 	}
@@ -35,15 +35,15 @@ public class RawWarcDocument {
 	}
 
 
-	public String getLocation() {
+	public String getUrl() {
 
-		return this.location;
+		return this.url;
 	}
 
 
-	public void setLocation(String location) {
+	public void setUrl(String url) {
 
-		this.location = location;
+		this.url = url;
 	}
 
 
