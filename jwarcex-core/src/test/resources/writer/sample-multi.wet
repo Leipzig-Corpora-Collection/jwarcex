@@ -17,7 +17,8 @@ Content-Length: 3
 Content-Type: text/plain
 WARC-Block-Digest: sha1:VGMT4NSHA2AWVOR6EVYXQUGCNSONBWE5
 WARC-Refers-To: <urn:uuid:00000000-0000-0000-0001-000000000001>
-WARC-Target-URI: http://localhost/
+WARC-Target-URI: http://localhost/abc
+HTML-Canonical-Url: http://localhost/
 
 abc
 
@@ -29,7 +30,8 @@ Content-Length: 3
 Content-Type: text/plain
 WARC-Block-Digest: sha1:LCOCEM22HAPRELISSIS7LQF2GBLO2WAR
 WARC-Refers-To: <urn:uuid:00000000-0000-0000-0001-000000000001>
-WARC-Target-URI: http://localhost/
+WARC-Target-URI: http://localhost/abc
+HTML-Canonical-Url: http://localhost/
 
 def
 

@@ -70,9 +70,6 @@ public class WetWriterImpl implements WarcWriter, AutoCloseable {
     public void write(ProcessedWarcDocument processedWarcDocument) throws IOException {
 
         WarcRecord warcRecord = this.getWarcWetRecord(processedWarcDocument, this.jwatWarcWriter);
-        if (processedWarcDocument.getTitle() != null) {
-            warcRecord.header.addHeader(WarcConstants.WET_FIELD_TITLE, processedWarcDocument.getTitle());
-        }
         if (processedWarcDocument.getCanonicalUrl() != null) {
             warcRecord.header.addHeader(WarcConstants.WET_FIELD_CANONICAL_URL, processedWarcDocument.getCanonicalUrl());
         }

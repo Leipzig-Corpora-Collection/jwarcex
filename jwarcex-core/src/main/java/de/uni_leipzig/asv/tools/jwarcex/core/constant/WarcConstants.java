@@ -46,11 +46,6 @@ public final class WarcConstants {
 	public static final String WARC_HEADER_BLOCK_DIGEST = "WARC-Block-Digest";
 
 	/**
-	 * Field name for the WarcHeader extension "WET_FIELD_TITLE".
-	 */
-	public static final String WET_FIELD_TITLE = "HTML-Title";
-
-	/**
 	 * Field name for the WarcHeader extension "WET_FIELD_CANONICAL_URL".
 	 */
 	public static final String WET_FIELD_CANONICAL_URL = "HTML-Canonical-Url";

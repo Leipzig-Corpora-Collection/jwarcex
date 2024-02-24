@@ -20,7 +20,6 @@ public class OutputWriterRunnableTest {
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"url1",
 				"canonicalUrl1",
-				"title 1",
 				"2016-01-01",
 				"content1",
 				"UTF-8");
@@ -28,7 +27,6 @@ public class OutputWriterRunnableTest {
 				"<urn:uuid:00000000-0000-0000-0000-000000000000>",
 				"url2",
 				"canonicalUrl2",
-				"title 2",
 				"2016-02-02",
 				"content2",
 				"UTF-8");

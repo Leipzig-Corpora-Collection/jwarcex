@@ -21,11 +21,6 @@ public class ProcessedWarcDocument {
 	private String canonicalUrl;
 
 	/**
-	 * The document's title.
-	 */
-	private String title;
-
-	/**
 	 * A formatted date string with the request date.
 	 */
 	private String date;
@@ -40,14 +35,13 @@ public class ProcessedWarcDocument {
 	 */
 	private String encoding;
 
-	public ProcessedWarcDocument(String warcRecordId, String url, String canonicalUrl, String title,
-								 String date, String content, String encoding) {
+	public ProcessedWarcDocument(String warcRecordId, String url, String canonicalUrl, String date,
+								 String content, String encoding) {
 
 		this.warcRecordId = warcRecordId;
 		this.url = url;
 		this.canonicalUrl = canonicalUrl;
 		this.date = date;
-		this.title = title;
 		this.content = content;
 		this.encoding = encoding;
 	}
@@ -76,25 +70,13 @@ public class ProcessedWarcDocument {
 
 	public String getCanonicalUrl() {
 
-		return this.url;
+		return this.canonicalUrl;
 	}
 
 
 	public void setCanonicalUrl(String url) {
 
-		this.url = url;
-	}
-
-
-	public String getTitle() {
-
-		return this.title;
-	}
-
-
-	public void setTitle(String title) {
-
-		this.title = title;
+		this.url = canonicalUrl;
 	}
 
 

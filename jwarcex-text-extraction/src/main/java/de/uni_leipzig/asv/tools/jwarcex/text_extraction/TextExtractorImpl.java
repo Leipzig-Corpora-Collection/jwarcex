@@ -208,17 +208,9 @@ public class TextExtractorImpl implements TextExtractor {
 			canonicalUrl = canonicalUrlElement.attr("href");
 		}
 
-		Element titleElement = document.selectFirst("head title");
-		String title = null;
-		if (titleElement != null) {
-			title = this.getText(titleElement);
-			title = WARC_FIELD_VALUE_INVALID_CHARACTERS.matcher(title).replaceAll(" ");
-		}
-
 		return new ProcessedWarcDocument(rawWarcDocument.getWarcRecordId(),
 				rawWarcDocument.getUrl(),
 				canonicalUrl,
-				title,
 				this.dateUtil.getFormattedDate(rawWarcDocument.getDate()),
 				extractedText.toString(),
 				charset.name());
